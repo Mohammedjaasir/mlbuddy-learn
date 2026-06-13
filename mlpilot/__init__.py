@@ -1,5 +1,5 @@
-from .auto.data import load
-from .auto.trainer import train
+from .auto.data import load, load_csv
+from .auto.trainer import train, compare
 
 __version__ = "0.1.0"
-__all__ = ["load", "train"]
+__all__ = ["load", "load_csv", "train", "compare"]

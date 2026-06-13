@@ -61,3 +61,33 @@ def train(X_train, X_test, y_train, y_test, model="logistic"):
     print("💡 Tip: Call model.suggest() to get advice on improving it.\n")
 
     return GuidedModel(clf, X_test, y_test, model)
+
+
+def compare(X_train, X_test, y_train, y_test):
+    """Try all available models and show which one performs best.
+    
+    This is the quickest way to find the best model for your data.
+    
+    Args:
+        X_train, X_test, y_train, y_test: Training and test data
+        
+    Returns:
+        Dictionary with model names and their accuracies
+    """
+    print("\n🔬 mlpilot: Comparing all models...\n")
+
+    results = {}
+    for name, clf in MODELS.items():
+        clf.fit(X_train, y_train)
+        acc = accuracy_score(y_test, clf.predict(X_test))
+        results[name] = acc
+        print(f"  {name:15s} → {acc * 100:6.1f}% accuracy")
+
+    print()
+    best_model = max(results, key=results.get)
+    best_acc = results[best_model]
+    
+    print(f"  🏆 Best: {best_model} with {best_acc * 100:.1f}% accuracy\n")
+    print(f"💡 Tip: Use ml.train(..., model='{best_model}') to train the winner.\n")
+    
+    return results

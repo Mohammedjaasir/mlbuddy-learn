@@ -11,7 +11,10 @@ def suggest(guided_model):
         print("  ⚠ Accuracy is quite low. Here's what to try:\n")
         print("    1. Get more training data.")
         print("    2. Check your labels — are they correct?")
-        print("    3. Try a different model: 'logistic', 'svm', or 'tree'.")
+        if guided_model.model_name != "random_forest":
+            print("    3. Try model='random_forest' — often works better.")
+        else:
+            print("    3. Try model='svm' or model='logistic' instead.")
         print("    4. Your features might not be informative enough.")
 
     elif acc < 0.80:

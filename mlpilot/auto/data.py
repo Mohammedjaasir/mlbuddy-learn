@@ -38,3 +38,32 @@ def load(X, y, test_size=0.2, scale=True, random_state=42):
     print("\n✅ Data ready! Pass X_train, X_test, y_train, y_test to ml.train()\n")
 
     return X_train, X_test, y_train, y_test
+
+
+def load_csv(filepath, target_column):
+    """Load data from a CSV file.
+    
+    Args:
+        filepath: Path to the CSV file
+        target_column: Name of the column containing the target labels
+        
+    Returns:
+        Tuple of (X_train, X_test, y_train, y_test)
+    """
+    import pandas as pd
+    
+    print(f"\n📂 Loading CSV from: {filepath}\n")
+    df = pd.read_csv(filepath)
+    
+    print(f"  ✓ Loaded {len(df)} rows and {len(df.columns)} columns")
+    
+    if target_column not in df.columns:
+        raise ValueError(
+            f"✗ Target column '{target_column}' not found.\n"
+            f"  Available columns: {list(df.columns)}"
+        )
+    
+    y = df[target_column].values
+    X = df.drop(columns=[target_column]).values
+    
+    return load(X, y)
